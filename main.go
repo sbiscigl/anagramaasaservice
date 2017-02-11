@@ -22,9 +22,5 @@ func main() {
 	http.Handle(dictionaryController.Path, dictionaryController)
 	http.Handle(dictionarySingleController.Path, dictionarySingleController)
 	http.Handle(wordController.Path, wordController)
-
-	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		w.Write([]byte("Hello world"))
-	})
 	http.ListenAndServe(":8080", nil)
 }

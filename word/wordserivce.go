@@ -23,5 +23,7 @@ func (ws *Service) GetAnagrams(word string) Word {
 
 /*Get all possible perms*/
 func getAllPerms(word string) []string {
+	/*TODO: a really computationally expensive step to get*/
+	/*all string permutations															*/
 	return []string{"ok", "cool", "placeholder"}
 }

@@ -13,6 +13,15 @@ func NewDictionary() *Dictionary {
 	}
 }
 
+/*NewDictionaryFromFile loads a dictionary from a textfile*/
+/*TODO: a really space intensive function to load the*/
+/*entire english language frome a textfile					 */
+func NewDictionaryFromFile(filePath string) *Dictionary {
+	return &Dictionary{
+		make(map[string]bool, 0),
+	}
+}
+
 /*Update the value map*/
 func (d *Dictionary) Update(word string) {
 	d.wordMap[word] = true
