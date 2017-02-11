@@ -1,6 +1,10 @@
 package word
 
-import "github.com/sbiscigl/anagramaasaservice/dictionary"
+import (
+	"fmt"
+
+	"github.com/sbiscigl/anagramaasaservice/dictionary"
+)
 
 /*Service layer for word endpoint*/
 type Service struct {
@@ -26,4 +30,16 @@ func getAllPerms(word string) []string {
 	/*TODO: a really computationally expensive step to get*/
 	/*all string permutations															*/
 	return []string{"ok", "cool", "placeholder"}
+}
+
+func permuations(prefix string, word string) {
+	n := len(word)
+	if n == 0 {
+		fmt.Println(prefix)
+		// return append(words, prefix)
+	} else {
+		for i := 0; i < n; i++ {
+			permuations(prefix+string(word[i]), word[0:i]+word[i+1:n])
+		}
+	}
 }
