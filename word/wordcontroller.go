@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/sbiscigl/anagramaasaservice/error"
+	"github.com/sbiscigl/anagramaasaservice/resterror"
 )
 
 /*Controller type for controller for dictionary requests*/
@@ -32,10 +32,10 @@ func (wc *Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(200)
 		} else {
 			w.WriteHeader(400)
-			w.Write(error.NewError("must be in foramt /words/{your word}.json", 400).ToJSON())
+			w.Write(resterror.NewError("must be in foramt /words/{your word}.json", 400).ToJSON())
 		}
 	} else {
 		w.WriteHeader(400)
-		w.Write(error.NewError("Http method not accepted", 400).ToJSON())
+		w.Write(resterror.NewError("Http method not accepted", 400).ToJSON())
 	}
 }
