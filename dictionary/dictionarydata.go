@@ -12,6 +12,14 @@ func NewData() *Data {
 	}
 }
 
+/*NewDataFromFile constructorfor data layer and*/
+/*populates from a text file*/
+func NewDataFromFile(filepath string) *Data {
+	return &Data{
+		NewDictionaryFromFile(filepath),
+	}
+}
+
 /*Post word to map*/
 func (d *Data) Post(words []string) {
 	for _, e := range words {

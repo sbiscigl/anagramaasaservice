@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/sbiscigl/anagramaasaservice/dictionary"
 	"github.com/sbiscigl/anagramaasaservice/word"
@@ -10,8 +13,11 @@ import (
 
 func main() {
 	fmt.Println("Starting Anagram as service")
-
-	dictionaryData := dictionary.NewData()
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+	dictionaryData := dictionary.NewDataFromFile(dir + "/resources/dictionary.txt")
 	wordData := word.NewData()
 	dictionaryService := dictionary.NewService(dictionaryData)
 	wordService := word.NewService(wordData, dictionaryService)

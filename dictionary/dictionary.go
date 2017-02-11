@@ -1,5 +1,11 @@
 package dictionary
 
+import (
+	"bufio"
+	"log"
+	"os"
+)
+
 /*Dictionary type for a list of all of the words*/
 /*in the english language                       */
 type Dictionary struct {
@@ -14,11 +20,21 @@ func NewDictionary() *Dictionary {
 }
 
 /*NewDictionaryFromFile loads a dictionary from a textfile*/
-/*TODO: a really space intensive function to load the*/
-/*entire english language frome a textfile					 */
 func NewDictionaryFromFile(filePath string) *Dictionary {
+	log.Println("starting to try to poulate map from file")
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	dictMap := make(map[string]bool, 0)
+	for scanner.Scan() {
+		dictMap[scanner.Text()] = true
+	}
+	log.Println("map populated")
 	return &Dictionary{
-		make(map[string]bool, 0),
+		dictMap,
 	}
 }
 
