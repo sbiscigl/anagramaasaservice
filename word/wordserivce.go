@@ -25,8 +25,24 @@ func (ws *Service) GetAnagrams(word string) Word {
 	words := getAllPerms(word)
 	log.Println("made all permutations")
 	log.Println(words)
+	words = filter(words, func(arg2 string) bool {
+		if arg2 == word {
+			return false
+		}
+		return true
+	})
 	realWorlds := ws.dcService.CheckForWords(words)
 	return NewWord(word, realWorlds)
+}
+
+func filter(s []string, fn func(string) bool) []string {
+	var p []string // == nil
+	for _, v := range s {
+		if fn(v) {
+			p = append(p, v)
+		}
+	}
+	return p
 }
 
 /*Get all possible perms*/
