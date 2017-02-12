@@ -1,6 +1,7 @@
 package word
 
 import (
+	"log"
 	"net/http"
 	"strings"
 
@@ -29,6 +30,7 @@ func (wc *Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			word = strings.TrimSuffix(word, ".json")
 			word = strings.TrimPrefix(word, "/words/")
 			w.Write(wc.ws.GetAnagrams(word).ToJSON())
+			log.Println("made it out")
 			w.WriteHeader(200)
 		} else {
 			w.WriteHeader(400)

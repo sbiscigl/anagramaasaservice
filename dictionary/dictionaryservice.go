@@ -1,5 +1,7 @@
 package dictionary
 
+import "log"
+
 /*Service service level logic for dictionary*/
 type Service struct {
 	/*Nothing yet*/
@@ -30,5 +32,6 @@ func (s *Service) DeleteOne(word string) {
 
 /*CheckForWords checks for words in the dictionary*/
 func (s *Service) CheckForWords(words []string) []string {
+	log.Println("have permuatations checking for words")
 	return s.data.CheckForWords(words)
 }

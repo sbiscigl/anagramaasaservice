@@ -1,7 +1,7 @@
 package word
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/sbiscigl/anagramaasaservice/dictionary"
 )
@@ -22,24 +22,40 @@ func NewService(data *Data, dcService *dictionary.Service) *Service {
 
 /*GetAnagrams gets all the anagrams for a word*/
 func (ws *Service) GetAnagrams(word string) Word {
-	return NewWord(word, ws.dcService.CheckForWords(getAllPerms(word)))
+	words := getAllPerms(word)
+	log.Println("made all permutations")
+	log.Println(words)
+	realWorlds := ws.dcService.CheckForWords(words)
+	return NewWord(word, realWorlds)
 }
 
 /*Get all possible perms*/
 func getAllPerms(word string) []string {
-	/*TODO: a really computationally expensive step to get*/
-	/*all string permutations															*/
-	return []string{"ok", "cool", "placeholder"}
+	log.Println("getting all permutations")
+	return Permutations(word)
 }
 
-func permuations(prefix string, word string) {
-	n := len(word)
-	if n == 0 {
-		fmt.Println(prefix)
-		// return append(words, prefix)
-	} else {
-		for i := 0; i < n; i++ {
-			permuations(prefix+string(word[i]), word[0:i]+word[i+1:n])
-		}
+/*Permutations recursive get all instances of string*/
+func Permutations(input string) []string {
+	log.Println("recursed")
+	if len(input) == 1 {
+		return []string{input}
 	}
+
+	runes := []rune(input)
+	subPermutations := Permutations(string(runes[0 : len(input)-1]))
+
+	result := []string{}
+	for _, s := range subPermutations {
+		result = append(result, merge([]rune(s), runes[len(input)-1])...)
+	}
+
+	return result
+}
+
+func merge(ins []rune, c rune) (result []string) {
+	for i := 0; i <= len(ins); i++ {
+		result = append(result, string(ins[:i])+string(c)+string(ins[i:]))
+	}
+	return
 }
