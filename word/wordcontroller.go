@@ -1,7 +1,6 @@
 package word
 
 import (
-	"log"
 	"net/http"
 	"strings"
 
@@ -28,10 +27,9 @@ func (wc *Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		word := r.URL.Path
 		if strings.HasSuffix(word, ".json") {
 			word = strings.TrimSuffix(word, ".json")
-			word = strings.TrimPrefix(word, "/words/")
-			w.Write(wc.ws.GetAnagrams(word).ToJSON())
-			log.Println("made it out")
+			word = strings.TrimPrefix(word, "/anagrams/")
 			w.WriteHeader(200)
+			w.Write(wc.ws.GetAnagrams(word).ToJSON())
 		} else {
 			w.WriteHeader(400)
 			w.Write(resterror.NewError("must be in foramt /words/{your word}.json", 400).ToJSON())

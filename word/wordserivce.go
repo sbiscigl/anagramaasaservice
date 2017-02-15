@@ -1,10 +1,6 @@
 package word
 
-import (
-	"log"
-
-	"github.com/sbiscigl/anagramaasaservice/dictionary"
-)
+import "github.com/sbiscigl/anagramaasaservice/dictionary"
 
 /*Service layer for word endpoint*/
 type Service struct {
@@ -23,8 +19,6 @@ func NewService(data *Data, dcService *dictionary.Service) *Service {
 /*GetAnagrams gets all the anagrams for a word*/
 func (ws *Service) GetAnagrams(word string) Word {
 	words := getAllPerms(word)
-	log.Println("made all permutations")
-	log.Println(words)
 	words = filter(words, func(arg2 string) bool {
 		if arg2 == word {
 			return false
@@ -47,13 +41,11 @@ func filter(s []string, fn func(string) bool) []string {
 
 /*Get all possible perms*/
 func getAllPerms(word string) []string {
-	log.Println("getting all permutations")
 	return Permutations(word)
 }
 
 /*Permutations recursive get all instances of string*/
 func Permutations(input string) []string {
-	log.Println("recursed")
 	if len(input) == 1 {
 		return []string{input}
 	}
